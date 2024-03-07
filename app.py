@@ -39,5 +39,16 @@ def create_book():
     books.append(new_book)
     return jsonify(new_book),201
 
+@app.route("/books/<int:book_id>",methods=["PUT"])
+@cross_origin()
+def update_book(book_id):
+    book = next((b for b in books if b["id"]==book_id),None)
+    if book:
+        data = request.get_json()
+        book.update(data)
+        return jsonify(book)
+    else:
+        return jsonify({"error":"Book not found"}),404
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000,debug=True)
