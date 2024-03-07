@@ -50,5 +50,15 @@ def update_book(book_id):
     else:
         return jsonify({"error":"Book not found"}),404
 
+@app.route("/books/<int:book_id>",methods=["DELETE"])
+@cross_origin()
+def delete_book(book_id):
+    book = next((b for b in books if b["id"]==book_id),None)
+    if book:
+        books.remove(book)
+        return jsonify({"message":"Book deleted successfully"}),200
+    else:
+        return jsonify({"error":"Book not found"}),404
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000,debug=True)
