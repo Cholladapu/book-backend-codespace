@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS,cross_origin
 app = Flask(__name__)
 cors = CORS(app)
@@ -26,6 +26,18 @@ def get_book(book_id):
         return jsonify(book)
     else:
         return jsonify({"error":"Book not found"}),404
+
+@app.route("/books",methods=["POST"])
+@cross_origin
+def create_book():
+    data = request.get_json()
+    new_book={
+        "id":len(books)+1,
+        "title":data["title"],
+        "author":data["author"]
+    }
+    books.append(new_book)
+    return jsonify(new_book),201
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000,debug=True)
