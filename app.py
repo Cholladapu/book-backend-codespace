@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -11,6 +11,9 @@ books=[
 def hello_world():
     return "<h1>Hello world</h1>"
 
+@app.route("/books",methods=["GET"])
+def get_all_books():
+    return jsonify({"books":books})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000,debug=True)
