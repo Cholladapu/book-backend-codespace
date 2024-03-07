@@ -28,7 +28,7 @@ def get_book(book_id):
         return jsonify({"error":"Book not found"}),404
 
 @app.route("/books",methods=["POST"])
-@cross_origin
+@cross_origin()
 def create_book():
     data = request.get_json()
     new_book={
