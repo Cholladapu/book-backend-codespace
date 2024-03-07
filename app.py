@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS,cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 books=[
     {"id":1,"title":"Book 1","author":"Author 1"},
@@ -12,6 +14,7 @@ def hello_world():
     return "<h1>Hello world</h1>"
 
 @app.route("/books",methods=["GET"])
+@cross_origin()
 def get_all_books():
     return jsonify({"books":books})
 
